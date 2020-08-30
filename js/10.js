@@ -1,4 +1,4 @@
-//Задача 6-5
+//Задача 6-10
 const users = [
   {
     id: '701b29c3-b35d-4cf1-a5f6-8b12b29a5081',
@@ -86,47 +86,44 @@ const users = [
   },
 ];
 /*
-find
-Получи объект пользователя(не массив) по уникальному значению свойства email.
+reduce, filter, sort
+Получи массив всех умений всех пользователей (поле skills), 
+при этом не должно быть повторяющихся умений и они должны быть отсортированы в алфавитном порядке.
 
-Используй деструктурирующее присваивание для параметра функции({ email }) без пробелов и переносов на новую строку.
+Слияние массивов:
 
-Используй только перебирающие методы массива которые не изменяют(не мутируют) исходный массив.
-Т.е.нельзя использовать for, splice, push и т.п.мутирующие методы.
-*/
+const odd = [1, 3, 5];
+const even = [2, 4, 6];
+
+// 1
+[...odd, ...even];
+//  [1, 3, 5, 2, 4, 6]
+
+// 2
+odd.concat(even)
+//  [1, 3, 5, 2, 4, 6]
+Используй только перебирающие методы массива которые не изменяют (не мутируют) исходный массив. 
+Т.е. нельзя использовать for, splice, push и т.п. мутирующие методы.
+ */
 
 // Write code under this line
-const getUserWithEmail = (array, mail) =>
-  array.find(({ email }) => email === mail);
+const getSortedUniqueSkills = array =>
+  array
+    .reduce((acc, { skills }) => [...acc.concat(skills)], [])
+    .filter((value, index, array) => array.indexOf(value) === index)
+    .sort();
 
-//const playerWithName = players.find(player => player.name === playerNameToFind);
+//const allTags = tweets.reduce((acc, tweet) => [...acc, ...tweet.tags], []);
+//const calculateTotalBalance = array =>array.reduce((totalBalance, { balance }) => totalBalance + balance, 0);
 
-console.log(getUserWithEmail(users, 'rossvazquez@xinware.com'));
-
-/* {
-    id: '88beb2f3-e4c2-49f3-a0a0-ecf957a95af3',
-    name: 'Ross Vazquez',
-    email: 'rossvazquez@xinware.com',
-    eyeColor: 'green',
-    friends: ['Marilyn Mcintosh', 'Padilla Garrison', 'Naomi Buckner'],
-    isActive: false,
-    balance: 3793,
-    skills: ['nulla', 'anim', 'proident', 'ipsum', 'elit'],
-    gender: 'male',
-    age: 24,
-} */
-
-// console.log(getUserWithEmail(users, 'blackburndotson@furnigeer.com'));
-
-/* {
-    id: '150b00fb-dd82-427d-9faf-2879ea87c695',
-    name: 'Blackburn Dotson',
-    email: 'blackburndotson@furnigeer.com',
-    eyeColor: 'brown',
-    friends: ['Jacklyn Lucas', 'Linda Chapman'],
-    isActive: false,
-    balance: 1498,
-    skills: ['non', 'amet', 'ipsum'],
-    gender: 'male',
-    age: 38,
-} */
+console.log(getSortedUniqueSkills(users));
+/* [ 'adipisicing', 'amet',
+ 'anim', 'commodo',
+ 'culpa', 'elit',
+ 'ex', 'ipsum',
+ 'irure', 'laborum',
+ 'lorem', 'mollit',
+ 'non', 'nostrud',
+ 'nulla', 'proident',
+ 'tempor', 'velit',
+ 'veniam' ]; */
